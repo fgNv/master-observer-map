@@ -4,33 +4,74 @@
     <script src="/Scripts/jquery-1.6.4.min.js"></script>
     <script src="/Scripts/jquery.signalR-2.2.1.min.js"></script>
     <script src="/signalr/js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 </head>
 <body>
-    <div>
+    <div id="map" style="height: 500px; width: 700px">
 
     </div>
-
-    <button onclick="fff.sendCoordinates()">SEND</button>
-
+    
     <script>
-        var fff = {};
-        fff.sendCoordinates = () => { console.log("not initialized") };
+        var masterObserverMap = {};
+        var map;        
+        var markers = [];
+
+        masterObserverMap.sendCoordinates = (latitude, longitude) => { console.log("not initialized") };
+
+        function addMarker(latitude, longitude) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(latitude, longitude),
+                map: map
+            });
+            markers.push(marker);
+            if (markers.length > 1) {
+                var markerBefore = markers[markers.length - 2];
+                var line = new google.maps.Polyline({
+                    path: [markerBefore.getPosition(), marker.getPosition()],
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                line.setMap(map);
+            }
+            return marker;
+        }
+
+        masterObserverMap.initializeMap = () => {
+            var latlng = new google.maps.LatLng(-18.8800397, -47.05878999999999);
+
+            var options = {
+                zoom: 5,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById("map"), options);
+            
+            google.maps.event.addListener(map, "click", (event) => {
+                var latitude = event.latLng.lat();
+                var longitude = event.latLng.lng();
+                addMarker(latitude, longitude);
+                masterObserverMap.sendCoordinates(latitude, longitude);
+            }); 
+        };
+ 
+        masterObserverMap.initializeMap();
 
         $(function () {
-            function sendCoordinates() {
-                var coordinates = {latitude: 2.3, longitude: 3.7};
+            function sendCoordinates(latitude, longitude) {
+                var coordinates = { latitude: latitude, longitude: longitude };
                 hub.server.sendCoordinates(coordinates);
             }
 
             var hub = $.connection.mapHub;
             hub.client.receiveCoordinates = function (coordinates) {
-                console.log(coordinates);
-                $("div").append(coordinates.latitude + " - " + coordinates.longitude + "<br />");
+                addMarker(coordinates.latitude, coordinates.longitude);
             }
 
             $.connection.hub.start();
-            fff.sendCoordinates = sendCoordinates;
-
+            masterObserverMap.sendCoordinates = sendCoordinates;
         });
     </script>
 </body>
