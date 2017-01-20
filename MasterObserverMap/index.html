@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/Scripts/jquery-1.6.4.min.js"></script>
+    <script src="/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="/signalr/js"></script>
+</head>
+<body>
+    <div>
+
+    </div>
+
+    <button onclick="fff.sendCoordinates()">SEND</button>
+
+    <script>
+        var fff = {};
+        fff.sendCoordinates = () => { console.log("not initialized") };
+
+        $(function () {
+            function sendCoordinates() {
+                var coordinates = {latitude: 2.3, longitude: 3.7};
+                hub.server.sendCoordinates(coordinates);
+            }
+
+            var hub = $.connection.mapHub;
+            hub.client.receiveCoordinates = function (coordinates) {
+                console.log(coordinates);
+                $("div").append(coordinates.latitude + " - " + coordinates.longitude + "<br />");
+            }
+
+            $.connection.hub.start();
+            fff.sendCoordinates = sendCoordinates;
+
+        });
+    </script>
+</body>
+</html>
