@@ -12,7 +12,7 @@
     "signalr": "^2.2.1"
   },
   "scripts": {
-    "heroku-postbuild": "gulp"
+    "heroku-postbuild": "gulp default"
   },
   "author": "",
   "license": "ISC",
