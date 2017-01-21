@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "name": "master-observer-map-sample",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "signalr": "^2.2.1"
+  },
+  "scripts": {
+    "install": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -54,6 +54,21 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Content Include="Scripts\jquery-1.6.4-vsdoc.js">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="Scripts\jquery-1.6.4.js">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="Scripts\jquery-1.6.4.min.js">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="Scripts\jquery.signalR-2.2.1.js">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="Scripts\jquery.signalR-2.2.1.min.js">
+      <Paket>True</Paket>
+    </Content>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="Hubs.fs" />
@@ -63,24 +78,6 @@
     <None Include="App.config" />
     <Content Include="paket.references" />
     <None Include="app.json" />
-    <Content Include="Scripts\jquery-1.6.4.min.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery-1.6.4.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery.signalR-2.2.1.min.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery.signalR-2.2.1.js">
-      <Paket>True</Paket>
-    </Content>
-    <None Include="index.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

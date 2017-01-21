@@ -2,6 +2,9 @@ source https://www.myget.org/F/aspnetvnext/api/v2
 source https://www.nuget.org/api/v2/
 source https://www.myget.org/F/temp-for-inter/api/v2
 
+nuget FAKE
+nuget Node.js
+nuget Npm.js
 nuget NuGet.CommandLine
 nuget FSharp.Core 4.0.0.1 framework: >= net45
 nuget jQuery 1.6.4 framework: >= net45
