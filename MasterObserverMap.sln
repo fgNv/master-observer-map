@@ -13,10 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Heroku", "Heroku", "{2719E8F3-49F2-4067-9270-936FEC987B29}"
 	ProjectSection(SolutionItems) = preProject
 		App.fsx = App.fsx
+		gulpfile.js = gulpfile.js
+		package.json = package.json
 		Procfile = Procfile
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MasterObserverMapPresentation(1)", "MasterObserverMapPresentation\", "{3E984044-BDF0-4664-9B1C-36BBE966DC04}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MasterObserverMapPresentation", "MasterObserverMapPresentation\", "{3E984044-BDF0-4664-9B1C-36BBE966DC04}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_51744"
