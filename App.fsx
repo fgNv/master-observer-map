@@ -30,7 +30,7 @@ Target "NpmInstall" (fun _ ->
         { p with
             Command = Install Standard
             WorkingDirectory = frontEndDirectory
-            NpmFilePath = Path.Combine(__SOURCE_DIRECTORY__, "packages", "Npm.js", "tools", "npm.cmd")
+            //NpmFilePath = Path.Combine(__SOURCE_DIRECTORY__, "packages", "Npm.js", "tools", "npm.cmd") -> Heroku denies access ):
         })
  )
  
