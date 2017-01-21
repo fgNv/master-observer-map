@@ -1,15 +1,5 @@
 ﻿open System.IO
 
-//System.Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-//if not (File.Exists "paket.exe") then 
-//    (System.IO.Path.GetTempFileName(), "https://github.com/fsprojects/Paket/releases/download/3.13.3/paket.exe") |> fun (tmp, url) -> 
-//        use wc = new System.Net.WebClient()
-//        wc.DownloadFile(url, tmp)
-//        System.IO.File.Move(tmp, System.IO.Path.GetFileName url)
-//
-//#r "paket.exe"
-//Paket.Dependencies.Install(File.ReadAllText "paket.dependencies")
-
 #r "packages/Owin/lib/net40/Owin.dll"
 #r "packages/Suave/lib/net40/Suave.dll"
 #r "packages/Microsoft.AspNet.SignalR.Core/lib/net45/Microsoft.AspNet.SignalR.Core.dll"
@@ -27,10 +17,21 @@
 
 open Suave
 open System
+open System.Net
 
 let myHomeFolder = Path.Combine(__SOURCE_DIRECTORY__, "MasterObserverMap")
-let cfg = { defaultConfig with homeFolder = Some(myHomeFolder) }
+
+let config = 
+    let port = System.Environment.GetEnvironmentVariable("PORT")
+    let ip127  = IPAddress.Parse("127.0.0.1")
+    let ipZero = IPAddress.Parse("0.0.0.0")
+
+    { defaultConfig with 
+        bindings=[ (if port = null then HttpBinding.create HTTP ip127 (uint16 8080)
+                    else HttpBinding.create HTTP ipZero (uint16 port)) ]
+        homeFolder = Some(myHomeFolder) }
+
 Console.WriteLine("before launch service")
 
-startWebServer cfg Routes.app
+startWebServer config Routes.app
 
