@@ -63,7 +63,6 @@
     <None Include="App.config" />
     <Content Include="paket.references" />
     <None Include="app.json" />
-    <None Include="Procfile" />
     <Content Include="Scripts\jquery-1.6.4.min.js">
       <Paket>True</Paket>
     </Content>
