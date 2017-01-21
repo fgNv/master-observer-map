@@ -1,0 +1,12 @@
+FSharp.Core
+jQuery
+Microsoft.AspNet.SignalR
+Microsoft.AspNet.SignalR.Core
+Microsoft.AspNet.SignalR.JS
+Microsoft.AspNet.SignalR.SystemWeb
+Microsoft.Owin
+Microsoft.Owin.Host.SystemWeb
+Microsoft.Owin.Security
+Newtonsoft.Json
+Owin
+Suave

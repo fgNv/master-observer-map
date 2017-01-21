@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{96E12EC2-2488-43C1-93E1-CE9E73C73FB4}"
+	ProjectSection(SolutionItems) = preProject
+		Build.fsx = Build.fsx
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MasterObserverMap", "MasterObserverMap\MasterObserverMap.fsproj", "{0C66EB16-1CF0-4DF6-AF21-08DE12FC3C50}"
 EndProject
 Global
