@@ -243,6 +243,6 @@ ModelManifest.xml
 
 Scripts
 paket.exe
-.paket
+.paket/paket.bootstrapper.exe
 
 AssetsTemp
