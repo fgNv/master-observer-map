@@ -25,16 +25,17 @@ open Fake.NpmHelper
 
 let frontEndDirectory = Path.Combine(__SOURCE_DIRECTORY__, "MasterObserverMapPresentation")
 
+(* Heroku denies access ):
 Target "NpmInstall" (fun _ ->
   Npm (fun p ->
         { p with
             Command = Install Standard
             WorkingDirectory = frontEndDirectory
-            //NpmFilePath = Path.Combine(__SOURCE_DIRECTORY__, "packages", "Npm.js", "tools", "npm.cmd") -> Heroku denies access ):
+            NpmFilePath = Path.Combine(__SOURCE_DIRECTORY__, "packages", "Npm.js", "tools", "npm.cmd")
         })
- )
- 
+ ) 
 RunTargetOrDefault "NpmInstall"
+*)
 
 let config = 
     let port = System.Environment.GetEnvironmentVariable("PORT")
