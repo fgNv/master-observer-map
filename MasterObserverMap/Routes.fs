@@ -15,6 +15,9 @@ open Hubs
 open Microsoft.AspNet.SignalR
 open Domain
 open Suave.Successful
+open System.Net.Security
+open System.Net
+open System.Security.Cryptography.X509Certificates
 
 let sendCoordinates coordinates =     
     let hubContext = GlobalHost.ConnectionManager.GetHubContext<MapHub, IClientMapHub> ()
@@ -28,6 +31,15 @@ let buildOwin() =
 let owin = buildOwin()
 
 SignalRConfiguration.configure()
+
+let delegation (o : Object) 
+               (certificate : X509Certificate) 
+               (chain : X509Chain) 
+               (errors : SslPolicyErrors) = true
+
+let certificateValidationCallback = RemoteCertificateValidationCallback(delegation)
+
+ServicePointManager.ServerCertificateValidationCallback <- certificateValidationCallback
 
 let app =     
     choose [
