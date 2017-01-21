@@ -11,7 +11,6 @@ open Suave.Operators
 open Suave.Filters
     
 open System
-open System.Threading
 open Hubs
 open Microsoft.AspNet.SignalR
 open Domain
