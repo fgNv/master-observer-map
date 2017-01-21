@@ -8,14 +8,20 @@
 </head>
 <body>
     <div id="map" style="height: 500px; width: 700px">
-
     </div>
-    
+
+    <div id="url"></div>
+    <div id="content"></div>
+
     <script>
         var masterObserverMap = {};
-        var map;        
+        var map;
         var markers = [];
+        var urlArgsArray = location.search.split("&").map(i => i.replace("?", "").split("="));
+        var urlArgs = {};
+        urlArgsArray.forEach(i => urlArgs[i[0]] = i[1]);
 
+        masterObserverMap.reference = null;
         masterObserverMap.sendCoordinates = (latitude, longitude) => { console.log("not initialized") };
 
         function addMarker(latitude, longitude) {
@@ -48,30 +54,53 @@
             };
 
             map = new google.maps.Map(document.getElementById("map"), options);
-            
-            google.maps.event.addListener(map, "click", (event) => {
-                var latitude = event.latLng.lat();
-                var longitude = event.latLng.lng();
-                addMarker(latitude, longitude);
-                masterObserverMap.sendCoordinates(latitude, longitude);
-            }); 
+
+            if (urlArgs["role"] != "observer") {
+                google.maps.event.addListener(map, "click", (event) => {
+                    var latitude = event.latLng.lat();
+                    var longitude = event.latLng.lng();
+                    addMarker(latitude, longitude);
+                    masterObserverMap.sendCoordinates(latitude, longitude);
+                });
+            }
         };
- 
+
         masterObserverMap.initializeMap();
 
-        $(function () {
+        $(() => {
             function sendCoordinates(latitude, longitude) {
                 var coordinates = { latitude: latitude, longitude: longitude };
-                hub.server.sendCoordinates(coordinates);
+                hub.server.sendCoordinates(coordinates, masterObserverMap.reference);
             }
 
             var hub = $.connection.mapHub;
-            hub.client.receiveCoordinates = function (coordinates) {
+            hub.client.receiveCoordinates = (coordinates) => {
                 addMarker(coordinates.latitude, coordinates.longitude);
+            };
+
+            hub.client.defineReference = reference => {
+                console.log('reference', reference);
+                masterObserverMap.reference = reference;
+
+                var urlParameters = "?role=observer&reference=" + masterObserverMap.reference;
+                var textContent = "Abrir como observador";
+                $("div#url").html("<a href='" + urlParameters + "' target='_blank'>" + textContent + "</a>");
+                $("div#content").text("Para abrir como observador, acesse a url: " + location.host + urlParameters);
+            };
+
+            $.connection.hub.qs = 'role=' + urlArgs["role"];
+            if (urlArgs["role"] == "observer") {
+                $.connection.hub.qs += "&reference=" + urlArgs["reference"];
             }
 
             $.connection.hub.start();
-            masterObserverMap.sendCoordinates = sendCoordinates;
+            if (urlArgs["role"] == "observer") {
+                masterObserverMap.sendCoordinates = () => {
+                    console.log("you're not allowed to do that!");
+                };
+            } else {
+                masterObserverMap.sendCoordinates = sendCoordinates;
+            }
         });
     </script>
 </body>

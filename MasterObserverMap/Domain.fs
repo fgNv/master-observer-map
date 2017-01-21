@@ -2,4 +2,3 @@
 
 [<CLIMutable>]
 type Coordinates = { Latitude : double; Longitude: double}
-
