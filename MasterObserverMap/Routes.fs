@@ -35,12 +35,33 @@ SignalRConfiguration.configure()
 let delegation (o : Object) 
                (certificate : X509Certificate) 
                (chain : X509Chain) 
-               (errors : SslPolicyErrors) = true
+               (errors : SslPolicyErrors) = 
+    try
+        System.Console.WriteLine("verifying certificate")
+        match errors with
+            | SslPolicyErrors.None -> 
+                System.Console.WriteLine("no error")
+                true
+            | _ -> System.Console.WriteLine("verifying errors")
+                   chain.ChainStatus |> 
+                   Seq.fold (fun acc (c : X509ChainStatus) -> 
+                        if not <| acc then 
+                            false 
+                        else
+                            chain.ChainPolicy.RevocationFlag <- X509RevocationFlag.EntireChain
+                            chain.ChainPolicy.RevocationMode <- X509RevocationMode.Online
+                            chain.ChainPolicy.UrlRetrievalTimeout <- new TimeSpan (0, 1, 0)
+                            chain.ChainPolicy.VerificationFlags <- X509VerificationFlags.AllFlags
+                            chain.Build (certificate :?> X509Certificate2) ) true 
+    with
+        | error ->
+            System.Console.WriteLine("expcetion occurred -> " + error.Message)                                    
+            false
 
-let certificateValidationCallback = RemoteCertificateValidationCallback(delegation)
+let certificateValidationCallback = RemoteCertificateValidationCallback(delegation) 
 
 ServicePointManager.ServerCertificateValidationCallback <- certificateValidationCallback
-
+    
 let app =     
     choose [
         GET >=> path "/" >=>             
