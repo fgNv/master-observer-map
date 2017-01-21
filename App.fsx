@@ -1,15 +1,14 @@
 ﻿open System.IO
 
-System.Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-if not (File.Exists "paket.exe") then 
-    (System.IO.Path.GetTempFileName(), "https://github.com/fsprojects/Paket/releases/download/3.13.3/paket.exe") |> fun (tmp, url) -> 
-        use wc = new System.Net.WebClient()
-        wc.DownloadFile(url, tmp)
-        System.IO.File.Move(tmp, System.IO.Path.GetFileName url)
-
-#r "paket.exe"
-
-Paket.Dependencies.Install(File.ReadAllText "paket.dependencies")
+//System.Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
+//if not (File.Exists "paket.exe") then 
+//    (System.IO.Path.GetTempFileName(), "https://github.com/fsprojects/Paket/releases/download/3.13.3/paket.exe") |> fun (tmp, url) -> 
+//        use wc = new System.Net.WebClient()
+//        wc.DownloadFile(url, tmp)
+//        System.IO.File.Move(tmp, System.IO.Path.GetFileName url)
+//
+//#r "paket.exe"
+//Paket.Dependencies.Install(File.ReadAllText "paket.dependencies")
 
 #r "packages/Owin/lib/net40/Owin.dll"
 #r "packages/Suave/lib/net40/Suave.dll"
