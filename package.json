@@ -11,9 +11,6 @@
     "jquery": "^3.1.1",
     "signalr": "^2.2.1"
   },
-  "scripts": {
-    "heroku-postbuild": "gulp default"
-  },
   "author": "",
   "license": "ISC",
   "description": ""
