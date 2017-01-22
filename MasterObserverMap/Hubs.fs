@@ -18,7 +18,7 @@ type MapHub() =
                 |> Async.RunSynchronously
         this.Clients.Caller.DefineReference newReference
     
-    member this.SendCoordinates coordinates reference =
+    member this.SendCoordinates (coordinates, reference) =
         this.Clients.Group(reference).ReceiveCoordinates(coordinates)
 
     override this.OnConnected() =
